@@ -71,6 +71,10 @@ header {
   font-size: 0;
 }
 
+#nav {
+  margin: 0;
+}
+
 #nav li {
   font-size: 14px;
   padding: 0;
@@ -88,6 +92,15 @@ header {
   width: 100%;
   text-decoration: none;
   color: #fff;
+  /* 
+  Missed adding a height to the <a> element. This caused a bug when
+  Hover.css effects were introduced. The 'sweep-to-bottom' effect did
+  not reach the bottom of the div, as the <a> element's height did not
+  match that of its parent. I have assigned it to inherit the height
+  from its parent as an alternative to manually supplying the same
+  value of 120px.
+   */
+  height: inherit;
 }
 
 .menuitem a i {
@@ -106,4 +119,15 @@ header {
   font-size: 14px;
   font-weight: 300;
   letter-spacing: 2px;
+}
+
+/* Hover.css -------------------------------------------------------- */
+
+/*
+:before pseudo-element contains the background-color, which is blue by
+default so this is overridden here.
+*/
+
+.hvr-sweep-to-bottom:before {
+  background-color: rgba(0, 0, 0, 0.2);
 }
