@@ -39,6 +39,20 @@
   background-color: #525252;
 }
 
+/* NEW - COPIED FROM SOURCE FILES FOR RESUME PT.2 LESSONS ----------- */
+
+.bg-color-conferences {
+  background-color: #f4f4f4;
+}
+
+.ui-menu-color-github {
+  background-color: #1c4a6c;
+}
+
+.ui-menu-color-interests {
+  background-color: #e74c3c;
+}
+
 /* SPECIAL PADDINGS / MARGINS / TEXT -------------------------------- */
 
 h1,
