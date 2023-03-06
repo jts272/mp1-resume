@@ -36,13 +36,31 @@ function fetchGitHubInformation(event) {
   </div>
   `);
 
-  // Start of jQuery promise:
-  // when() arg: getJSON
-  // then() args: onSuccessfulResponse, onErrorResponse
-  $.when($.getJSON(`https://api.github.com/users/${username}`)).then(
-    function (response) {
-      const userData = response;
+  // Start of jQuery promise. Calls made with $.when():
+
+  // $.when() arg1: getJSON for user
+  // $.when() arg1: getJSON for user's repos
+
+  // $.then() args: onSuccessfulResponse, onErrorResponse
+
+  $.when(
+    $.getJSON(`https://api.github.com/users/${username}`),
+    $.getJSON(`https://api.github.com/users/${username}/repos`)
+  ).then(
+    // REFACTOR: Two calls require two responses (two args for the $.then()
+    // function).
+
+    // NOTE: When making multiple calls from $.when(), the response is packed
+    // into arrays, so we must specify the first index of the corresponding
+    // response object!
+
+    function (response1, response2) {
+      const userData = response1[0];
+      console.log(userData);
+      const repoData = response2[0];
+      console.log(repoData);
       $("#gh-user-data").html(userInformationHTML(userData));
+      $("#gh-repo-data").html(repoInformationHTML(repoData));
     },
     function (errorResponse) {
       if (errorResponse.status === 404) {
