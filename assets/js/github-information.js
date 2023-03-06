@@ -58,6 +58,10 @@ function repoInformationHTML(repos) {
 }
 
 function fetchGitHubInformation(event) {
+  // Fix: clear the corresponding divs when the text box is empty so the last
+  // user's data does not linger:
+  $("gh-user-data").html("");
+  $("gh-repo-data").html("");
   // Get the input from the username text box
   const username = $("#gh-username").val();
   // If the field is empty:
@@ -113,3 +117,6 @@ function fetchGitHubInformation(event) {
     }
   );
 }
+
+// Show the octocat user (pre-populated in the text field) when DOM is loaded:
+$(document).ready(fetchGitHubInformation);
