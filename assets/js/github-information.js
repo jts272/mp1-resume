@@ -20,6 +20,43 @@ function userInformationHTML(user) {
   `;
 }
 
+function repoInformationHTML(repos) {
+  // This object is returned as an array, therefore array methods can be used:
+
+  // If empty array:
+  if (repos.length == 0) {
+    return `<div class="clearfix repo-list">No repos found!</div>`;
+  }
+
+  // As data is returned in an array, we want to iterate through it to get the
+  // information out (remember .map() works similarly to .forEach(), the returns
+  // an array):
+
+  const listItemsHTML = repos.map(function (repo) {
+    return `
+    <li>
+      <a href="${repo.html_url}" target="_blank">${repo.name}</a>
+    </li>`;
+  });
+
+  console.log("listItems: " + listItemsHTML);
+
+  // As the listItemsHTML returns an array from .map(), we can join each
+  // iteration with a newline char:
+
+  // NOTE: Ensure the .join() method is included /inside/ the template literal
+  // ${expression}.
+  return `
+  <div class="clearfix repo-list">
+    <p>
+      <strong>Repo List:</strong>
+    </p>
+    <ul>
+        ${listItemsHTML.join("\n")}
+    </ul>
+  </div>`;
+}
+
 function fetchGitHubInformation(event) {
   // Get the input from the username text box
   const username = $("#gh-username").val();
@@ -56,9 +93,9 @@ function fetchGitHubInformation(event) {
 
     function (response1, response2) {
       const userData = response1[0];
-      console.log(userData);
+      // console.log(userData);
       const repoData = response2[0];
-      console.log(repoData);
+      // console.log(repoData);
       $("#gh-user-data").html(userInformationHTML(userData));
       $("#gh-repo-data").html(repoInformationHTML(repoData));
     },
