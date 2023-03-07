@@ -39,7 +39,7 @@ function repoInformationHTML(repos) {
     </li>`;
   });
 
-  console.log("listItems: " + listItemsHTML);
+  // console.log("listItems: " + listItemsHTML);
 
   // As the listItemsHTML returns an array from .map(), we can join each
   // iteration with a newline char:
@@ -107,6 +107,14 @@ function fetchGitHubInformation(event) {
       if (errorResponse.status === 404) {
         $("#gh-user-data").html(`
         <h2>No info found for user ${username}</h2>
+        `);
+      } else if (errorResponse.status === 403) {
+        // Date object is presented as a UNIX timestamp so is multiplied by 1000
+        const resetTime = new Date(
+          errorResponse.getResponseHeader("X-Rate-Limit-Reset") * 1000
+        );
+        $("gh-user-date").html(`
+        <h4>Too many requests, please wait until ${resetTime.toLocaleDateString()}</h4>}
         `);
       } else {
         console.log(errorResponse);
